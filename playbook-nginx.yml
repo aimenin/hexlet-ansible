@@ -1,6 +1,10 @@
 # На какой группе серверов
 - hosts: appservers
 
+  vars:
+    nginx_port: 8080
+    root_dir: /usr/share/nginx/html
+
   tasks:
     - name: install nginx
       # apt-get update && apt-get install redis-server
@@ -13,12 +17,12 @@
     - name: copy html
       ansible.builtin.copy:
         src: files/index.html
-        dest: /usr/share/nginx/html/index.html
+        dest: '{{root_dir}}/index.html'
       become: yes
       tags: files
     - name: copy conf
-      ansible.builtin.copy:
-        src: files/nginx.conf
+      ansible.builtin.template:
+        src: files/nginx.conf.j2
         dest: /etc/nginx/nginx.conf
       notify:
         - restart nginx
