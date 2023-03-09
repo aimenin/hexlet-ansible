@@ -1,0 +1,40 @@
+# На какой группе серверов
+- hosts: appservers
+
+  tasks:
+    - name: update apt
+      # apt-get update && apt-get install redis-server
+      ansible.builtin.apt: # имя модуля Ansible
+        update_cache: yes
+      become: yes
+      tags: apt
+    - name: install git
+      ansible.builtin.apt:
+        name: git
+        state: present
+      become: yes
+      tags: apt
+    - name: install Nodejs
+      ansible.builtin.apt:
+        name: nodejs
+        state: present
+      become: yes
+      tags: apt
+    - name: creating user arya
+      user:
+        name: arya
+        password: arya12345
+      become: yes
+      tags: users
+    - name: creating user sansa
+      user:
+        name: sansa
+        password: sansa12345
+      become: yes
+      tags: users
+    - name:
+      user:
+        name: tirion
+        password: tirion12345
+      become: yes
+      tags: users
