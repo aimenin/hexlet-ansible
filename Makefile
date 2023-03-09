@@ -6,3 +6,9 @@ install-packages:
 
 create-users:
 	ansible-playbook --check playbook-tags.yml -i inventory.ini -u root -t users
+
+install-all-packages:
+	ansible-playbook playbook-nginx.yml -i inventory.ini -u root -t installing
+
+files-nginx:
+	ansible-playbook playbook-nginx.yml -i inventory.ini -u root -t files
