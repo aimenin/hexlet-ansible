@@ -1,0 +1,35 @@
+# На какой группе серверов
+- hosts: appservers
+
+  vars:
+    users:
+      - { name: 'jaime', email: 'jaime@test.ru', password: '12345' }
+      - { name: 'sansa', email: 'sansa@test.ru', password: '12345' }
+      - { name: 'robert', email: 'robert@test.ru', password: '12345' }
+  tasks:
+    - name: add users
+      ansible.builtin.user:
+        name: '{{ item.name }}'
+        state: present
+        password: '{{ item.password }}'
+      loop: '{{ users }}'
+      become: yes
+    - name: add gitconfig
+      ansible.builtin.template:
+        src: files/.gitconfig.j2
+        dest: '/home/{{item.name}}/.gitconfig'
+      loop: '{{ users }}'
+      become: yes
+    - name: Create a directory if it does not exist
+      ansible.builtin.file:
+        path: '/home/{{item.name}}/.ssh'
+        state: directory
+        mode: '0755'
+      loop: '{{ users }}'
+      become: yes
+    - name: add public key
+      ansible.builtin.template:
+        src: files/id_rsa.pub
+        dest: '/home/{{item.name}}/.ssh/authorized_keys'
+      loop: '{{ users }}'
+      become: yes

@@ -15,3 +15,6 @@ files-nginx:
 
 test-facts:
 	ansible-playbook playbook-facts.yml -i inventory.ini -u root
+
+make-users:
+	ansible-playbook playbook-loops.yml -i inventory.ini -u root
