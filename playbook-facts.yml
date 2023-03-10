@@ -1,0 +1,12 @@
+# На какой группе серверов
+- hosts: appservers
+  gather_facts: no
+
+  tasks:
+    - name: install git
+      # apt-get update && apt-get install redis-server
+      ansible.builtin.apt: # имя модуля Ansible
+        name: git
+        state: present
+        update_cache: yes
+      become: yes

@@ -12,3 +12,6 @@ install-all-packages:
 
 files-nginx:
 	ansible-playbook playbook-nginx.yml -i inventory.ini -u root -t files
+
+test-facts:
+	ansible-playbook playbook-facts.yml -i inventory.ini -u root
