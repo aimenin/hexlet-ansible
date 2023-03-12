@@ -21,3 +21,6 @@ make-users:
 
 manage-filteres:
 	ansible-playbook playbook-filteres
+
+cowsay:
+	ansible-playbook playbook-register.yml -i inventory.ini -u root

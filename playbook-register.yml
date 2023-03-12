@@ -1,0 +1,46 @@
+# На какой группе серверов
+- hosts: appservers
+
+  vars:
+    nginx_port: 8080
+    root_dir: /usr/share/nginx/html
+
+  tasks:
+    - name: install nginx
+      # apt-get update && apt-get install redis-server
+      ansible.builtin.apt: # имя модуля Ansible
+        name: nginx
+        state: present
+        update_cache: yes
+      become: yes
+      tags: installing
+    - name: install cowsay
+      ansible.builtin.apt:
+        name: cowsay
+        state: present
+        update_cache: yes
+      become: yes
+    - name: cowsay
+      ansible.builtin.shell: cowsay hello
+      register: cowsay_result
+      become: yes
+    - name: copy html
+      ansible.builtin.template:
+        src: files/index.html.j2
+        dest: '{{root_dir}}/index.html'
+      become: yes
+      tags: files
+    - name: copy conf
+      ansible.builtin.template:
+        src: files/nginx.conf.j2
+        dest: /etc/nginx/nginx.conf
+      notify:
+        - restart nginx
+      tags: files
+      become: yes
+  handlers:
+    - name: restart nginx
+      ansible.builtin.service:
+        name: nginx
+        state: reloaded
+      become: yes
