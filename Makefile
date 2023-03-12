@@ -18,3 +18,6 @@ test-facts:
 
 make-users:
 	ansible-playbook playbook-loops.yml -i inventory.ini -u root
+
+manage-filteres:
+	ansible-playbook playbook-filteres

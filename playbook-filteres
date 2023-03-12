@@ -1,0 +1,13 @@
+# На какой группе серверов
+- hosts: localhost
+
+  # "{{ ansible_facts['memtotal_mb'] / 10 }}"
+
+  vars:
+    server_name: "This is server {{ ansible_facts['nodename'] }}!"
+
+  tasks:
+    - name: copy html
+      ansible.builtin.template:
+        src: templates/index.html.j2
+        dest: files/index.html
