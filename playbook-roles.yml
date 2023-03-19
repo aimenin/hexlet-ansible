@@ -1,0 +1,5 @@
+# На какой группе серверов
+- hosts: appservers
+
+  roles:
+    - role: nginxinc.nginx

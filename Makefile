@@ -24,3 +24,6 @@ manage-filteres:
 
 cowsay:
 	ansible-playbook playbook-register.yml -i inventory.ini -u root
+
+roles:
+	ansible-playbook playbook-roles.yml -i inventory.ini -u root
